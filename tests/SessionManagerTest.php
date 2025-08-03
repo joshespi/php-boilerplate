@@ -44,4 +44,39 @@ class SessionManagerTest extends TestCase
 
         $this->assertNotSame($oldId, $newId);
     }
+    public function testSessionStartTwice()
+    {
+        SessionManager::start();
+        $firstId = session_id();
+        SessionManager::start();
+        $secondId = session_id();
+        $this->assertSame($firstId, $secondId, "Session ID should remain the same if session is already started.");
+    }
+    public function testDestroyWithoutActiveSession()
+    {
+        SessionManager::destroy(); // Should not throw
+        $this->assertEmpty($_SESSION, "Session should remain empty after destroy with no active session.");
+    }
+    public function testCsrfTokenIsUnique()
+    {
+        unset($_SESSION['csrf_token']);
+        $token1 = SessionManager::generateCsrfToken();
+        unset($_SESSION['csrf_token']);
+        $token2 = SessionManager::generateCsrfToken();
+        $this->assertNotEquals($token1, $token2, "Each CSRF token should be unique.");
+    }
+    public function testSessionDataPersistence()
+    {
+        SessionManager::start();
+        $_SESSION['foo'] = 'bar';
+        session_write_close();
+        SessionManager::start();
+        $this->assertEquals('bar', $_SESSION['foo'], "Session data should persist across requests.");
+    }
+    public function testRegenerateWithoutSession()
+    {
+        SessionManager::destroy();
+        $this->expectNotToPerformAssertions();
+        SessionManager::regenerate(); // Should not throw
+    }
 }
