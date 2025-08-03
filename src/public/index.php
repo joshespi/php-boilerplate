@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Input validation & sanitization
         $username = trim($_POST['username'] ?? '');
         $password = $_POST['password'] ?? '';
-        if (!preg_match('/^[a-zA-Z0-9_]{3,30}$/', $username)) {
+        if (!preg_match('/^[a-zA-Z0-9_]{5,50}$/', $username)) {
             $error = "Invalid username format.";
         } else {
             $success = AuthController::login($username, $password);

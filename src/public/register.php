@@ -18,12 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Input validation & sanitization
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-    if (!preg_match('/^[a-zA-Z0-9_]{3,30}$/', $username)) {
-        echo "Username must be 3-30 characters and contain only letters, numbers, and underscores. <a href=\"register.php\">Try again</a>.";
+    if (!preg_match('/^[a-zA-Z0-9_]{5,50}$/', $username)) {
+        echo "Username must be 5-50 characters and contain only letters, numbers, and underscores. <a href=\"register.php\">Try again</a>.";
         exit;
     }
-    if (strlen($password) < 6) {
-        echo "Password must be at least 6 characters. <a href=\"register.php\">Try again</a>.";
+    if (strlen($password) < 8) {
+        echo "Password must be at least 8 characters. <a href=\"register.php\">Try again</a>.";
         exit;
     }
     $result = AuthController::register($username, $password);
