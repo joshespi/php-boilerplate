@@ -19,17 +19,6 @@ class SessionManagerTests extends TestCase
         // Check if session is destroyed
         $this->assertEmpty($_SESSION);
     }
-    public function testSessionManagerDestroy()
-    {
-        // Set some session data
-        $_SESSION['test'] = 'value';
-
-        // Call the destroy method
-        SessionManager::destroy();
-
-        // Check if session is destroyed
-        $this->assertEmpty($_SESSION);
-    }
     public function testCsrfTokenGeneration()
     {
         $token = SessionManager::generateCsrfToken();

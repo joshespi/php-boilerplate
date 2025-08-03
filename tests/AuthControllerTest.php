@@ -80,21 +80,6 @@ class AuthControllerTest extends TestCase
     {
         $this->assertFalse(AuthController::check());
     }
-    public function testLogout()
-    {
-        $username = 'logoutuser';
-        $password = 'logoutpassword';
-
-        // Register and login the user first
-        AuthController::register($username, $password);
-        AuthController::login($username, $password);
-
-        // Logout
-        AuthController::logout();
-
-        // Check if session is destroyed
-        $this->assertFalse(AuthController::check());
-    }
     public function testRegisterLoginLogoutSessionManagement()
     {
         $username = 'sessionuser';
