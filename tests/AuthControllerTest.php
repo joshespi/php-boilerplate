@@ -95,32 +95,32 @@ class AuthControllerTest extends TestCase
         // Check if session is destroyed
         $this->assertFalse(AuthController::check());
     }
-    // public function testRegisterLoginLogoutSessionManagement()
-    // {
-    //     $username = 'sessionuser';
-    //     $password = 'sessionpassword';
+    public function testRegisterLoginLogoutSessionManagement()
+    {
+        $username = 'sessionuser';
+        $password = 'sessionpassword343';
 
-    //     // Register the user first
-    //     AuthController::register($username, $password);
-    //     AuthController::login($username, $password);
+        // Register the user first
+        AuthController::register($username, $password);
+        AuthController::login($username, $password);
 
-    //     // Check if session is active
-    //     $this->assertTrue(AuthController::check());
+        // Check if session is active
+        $this->assertTrue(AuthController::check());
 
-    //     // Logout and check session again
-    //     AuthController::logout();
-    //     $this->assertFalse(AuthController::check());
-    // }
-    // public function testLoginWithValidCredentials()
-    // {
-    //     $username = 'validuser';
-    //     $password = 'validpassword';
+        // Logout and check session again
+        AuthController::logout();
+        $this->assertFalse(AuthController::check());
+    }
+    public function testLoginWithValidCredentials()
+    {
+        $username = 'validuser';
+        $password = 'validpassword342';
 
-    //     // Register the user first
-    //     AuthController::register($username, $password);
+        // Register the user first
+        AuthController::register($username, $password);
 
-    //     $result = AuthController::login($username, $password);
+        $result = AuthController::login($username, $password);
 
-    //     $this->assertTrue($result);
-    // }
+        $this->assertTrue($result);
+    }
 }

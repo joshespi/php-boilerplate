@@ -46,9 +46,4 @@ class SessionManagerTests extends TestCase
         $this->assertTrue(SessionManager::validateCsrfToken($token));
         $this->assertFalse(SessionManager::validateCsrfToken('invalid_token'));
     }
-    // public function testSessionRegenerate()
-    // {
-    //     SessionManager::regenerate();
-    //     $this->assertEquals(PHP_SESSION_ACTIVE, session_status());
-    // }
 }
