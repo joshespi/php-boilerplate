@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use App\Controllers\SessionManager;
 
-class SessionManagerTests extends TestCase
+class SessionManagerTest extends TestCase
 {
     public function testSessionSanity()
     {
