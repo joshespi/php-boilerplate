@@ -14,10 +14,11 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public static function create($username, $passwordHash)
+    public static function create($username, $password)
     {
         $pdo = \Database::getConnection();
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare('INSERT INTO users (username, password) VALUES (?, ?)');
-        return $stmt->execute([$username, $passwordHash]);
+        return $stmt->execute([$username, $hash]);
     }
 }

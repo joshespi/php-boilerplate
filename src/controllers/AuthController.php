@@ -46,8 +46,7 @@ class AuthController
             return ['success' => false, 'message' => 'Username already exists.'];
         }
 
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-        $created = User::create($username, $hash);
+        $created = User::create($username, $password);
 
         if ($created) {
             return ['success' => true, 'message' => 'Registration successful.'];
