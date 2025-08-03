@@ -63,6 +63,12 @@ class AuthControllerTest extends TestCase
         $result = AuthController::register('ab', 'password123');
         $this->assertFalse($result['success']);
     }
+    public function testRegistrationRejectsSqlInjectionUsername()
+    {
+        $maliciousUsername = "testuser'; DROP TABLE users; --";
+        $result = AuthController::register($maliciousUsername, 'password3213');
+        $this->assertFalse($result['success']);
+    }
     public function testRegisterWithShortPassword()
     {
         $result = AuthController::register('validuser', '123');
