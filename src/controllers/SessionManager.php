@@ -21,10 +21,10 @@ class SessionManager
         return $_SESSION[$key] ?? $default;
     }
 
-    public static function remove($key)
-    {
-        unset($_SESSION[$key]);
-    }
+    // public static function remove($key)
+    // {
+    //     unset($_SESSION[$key]);
+    // }
     public static function regenerate()
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
@@ -37,6 +37,7 @@ class SessionManager
             session_unset();
             session_destroy();
         }
+        $_SESSION = []; // Clear session data
     }
     public static function generateCsrfToken()
     {
