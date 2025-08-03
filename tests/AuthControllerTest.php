@@ -1,7 +1,7 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// if (session_status() === PHP_SESSION_NONE) {
+//     session_start();
+// }
 require_once __DIR__ . '/TestDatabase.php';
 
 use PHPUnit\Framework\TestCase;
