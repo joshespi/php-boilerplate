@@ -21,10 +21,6 @@ class SessionManager
         return $_SESSION[$key] ?? $default;
     }
 
-    // public static function remove($key)
-    // {
-    //     unset($_SESSION[$key]);
-    // }
     public static function regenerate()
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
