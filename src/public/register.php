@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/start.php';
 
 use App\Controllers\AuthController;
 use App\Controllers\SessionManager;
 
-SessionManager::start();
+$error = '';
+$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // CSRF check
@@ -35,22 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 $csrfToken = SessionManager::generateCsrfToken();
-?>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Register</title>
-</head>
-
-<body>
-    <h2>Register</h2>
-    <form method="post" action="register.php">
-        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-        <label>Username: <input type="text" name="username" required></label><br>
-        <label>Password: <input type="password" name="password" required></label><br>
-        <button type="submit">Register</button>
-    </form>
-</body>
-
-</html>
+render('register', [
+    'csrfToken' => $csrfToken,
+    'error' => $error,
+    'flash' => $success,
+    'title' => 'Register'
+]);
