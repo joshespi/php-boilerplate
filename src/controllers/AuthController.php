@@ -10,6 +10,7 @@ class AuthController
     {
         $user = User::findByUsername($username);
         if ($user && password_verify($password, $user['password'])) {
+            SessionManager::regenerate();
             SessionManager::set('user_id', $user['id']);
             return true;
         }
