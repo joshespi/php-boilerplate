@@ -35,9 +35,6 @@ class SessionManagerTest extends TestCase
         $this->assertTrue(SessionManager::validateCsrfToken($token));
         $this->assertFalse(SessionManager::validateCsrfToken('invalid_token'));
     }
-    /**
-     * @runInSeparateProcess
-     */
     public function testSessionRegenerate()
     {
         SessionManager::start();
@@ -45,6 +42,6 @@ class SessionManagerTest extends TestCase
         SessionManager::regenerate();
         $newId = session_id();
 
-        $this->assertNotEquals($oldId, $newId);
+        $this->assertNotSame($oldId, $newId);
     }
 }
