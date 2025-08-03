@@ -1,0 +1,54 @@
+<?php
+
+use PHPUnit\Framework\TestCase;
+use App\Controllers\SessionManager;
+
+class SessionManagerTests extends TestCase
+{
+    public function testSessionSanity()
+    {
+        // Set some session data
+        $_SESSION['test'] = 'value';
+
+        // Check if session data is set correctly
+        $this->assertEquals('value', $_SESSION['test']);
+
+        // Destroy the session
+        SessionManager::destroy();
+
+        // Check if session is destroyed
+        $this->assertEmpty($_SESSION);
+    }
+    public function testSessionManagerDestroy()
+    {
+        // Set some session data
+        $_SESSION['test'] = 'value';
+
+        // Call the destroy method
+        SessionManager::destroy();
+
+        // Check if session is destroyed
+        $this->assertEmpty($_SESSION);
+    }
+    public function testCsrfTokenGeneration()
+    {
+        $token = SessionManager::generateCsrfToken();
+
+        $this->assertNotEmpty($token);
+        $this->assertIsString($token);
+        $this->assertEquals(64, strlen($token)); // Default length for CSRF token
+    }
+    public function testCsrfTokenValidation()
+    {
+        $token = SessionManager::generateCsrfToken();
+        $_SESSION['csrf_token'] = $token;
+
+        $this->assertTrue(SessionManager::validateCsrfToken($token));
+        $this->assertFalse(SessionManager::validateCsrfToken('invalid_token'));
+    }
+    // public function testSessionRegenerate()
+    // {
+    //     SessionManager::regenerate();
+    //     $this->assertEquals(PHP_SESSION_ACTIVE, session_status());
+    // }
+}
