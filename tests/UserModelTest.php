@@ -24,4 +24,40 @@ class UserModelTest extends TestCase
         $result = $userModel->create('uniqueuser', 'password2');
         $this->assertFalse($result, 'Should not allow duplicate usernames');
     }
+    public function testFindByUsernameReturnsNullForNonExistentUser()
+    {
+        $userModel = new User();
+        $result = $userModel->findByUsername('no_such_user');
+        $this->assertFalse($result);
+    }
+    public function testCreateWithEmptyUsernameFails()
+    {
+        $userModel = new User();
+        $result = $userModel->create('', 'password');
+        $this->assertFalse($result);
+    }
+    public function testCreateWithInvalidUsernameFails()
+    {
+        $userModel = new User();
+        $this->assertFalse($userModel->create('ab', 'Password123'));
+        $this->assertFalse($userModel->create('user!@#$', 'Password123'));
+        $this->assertFalse($userModel->create(str_repeat('a', 51), 'Password123'));
+    }
+    public function testCreateWithWeakPasswordFails()
+    {
+        $userModel = new User();
+        $this->assertFalse($userModel->create('validuser', 'short'));
+        $this->assertFalse($userModel->create('validuser', 'allletters'));
+        $this->assertFalse($userModel->create('validuser', '12345678'));
+    }
+    public function testCreateWithSqlInjectionUsernameFails()
+    {
+        $userModel = new User();
+        $this->assertFalse($userModel->create("test'; DROP TABLE users; --", 'Password123'));
+    }
+    public function testCreateWithSqlInjectionPasswordFails()
+    {
+        $userModel = new User();
+        $this->assertFalse($userModel->create('validuser', "password'; DROP TABLE users; --"));
+    }
 }
