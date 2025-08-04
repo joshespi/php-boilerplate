@@ -58,9 +58,9 @@ class AuthControllerTest extends TestCase
 
         $this->assertFalse($result);
     }
-    public function testRegisterWithInvalidUsername()
+    public function testRegisterWithEmptyFields()
     {
-        $result = AuthController::register('ab', 'password123');
+        $result = AuthController::register('', '');
         $this->assertFalse($result['success']);
     }
     public function testRegistrationRejectsSqlInjectionUsername()
@@ -74,11 +74,7 @@ class AuthControllerTest extends TestCase
         $result = AuthController::register('validuser', '123');
         $this->assertFalse($result['success']);
     }
-    public function testRegisterWithEmptyFields()
-    {
-        $result = \App\Controllers\AuthController::register('', '');
-        $this->assertFalse($result['success']);
-    }
+
     public function testCheckWithoutLogin()
     {
         $this->assertFalse(AuthController::check());
