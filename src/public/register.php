@@ -3,6 +3,7 @@ require_once __DIR__ . '/start.php';
 
 use App\Controllers\AuthController;
 use App\Controllers\SessionManager;
+use App\Models\User;
 
 $error = '';
 $success = '';
@@ -18,14 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Input validation & sanitization
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-    if (!preg_match('/^[a-zA-Z0-9_]{5,50}$/', $username)) {
-        echo "Username must be 5-50 characters and contain only letters, numbers, and underscores. <a href=\"register.php\">Try again</a>.";
-        exit;
-    }
-    if (strlen($password) < 8) {
-        echo "Password must be at least 8 characters. <a href=\"register.php\">Try again</a>.";
-        exit;
-    }
+
+    $validation = User::validateCredentials($username, $password);
+
     $result = AuthController::register($username, $password);
     if ($result['success']) {
         echo "Registration successful. <a href=\"/\">Login here</a>.";
