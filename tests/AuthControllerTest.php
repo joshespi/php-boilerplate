@@ -22,7 +22,7 @@ class AuthControllerTest extends TestCase
         $this->assertTrue($result['success']);
         $this->assertEquals('Registration successful.', $result['message']);
     }
-    public function testRegisterExisitingUser()
+    public function testRegisterExistingUser()
     {
         $username = 'duplicateuser';
         $password = 'password123';
